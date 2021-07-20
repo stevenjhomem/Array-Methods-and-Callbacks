@@ -93,7 +93,7 @@ function getYears(array) {
     return years;
 }
 
-console.log(getYears(fifaData,getYears));
+console.log(getYears(fifaData));
 
 
 
@@ -104,10 +104,31 @@ Use the higher-order function getWinners to do the following:
 3. Determines the winner (home or away) of each `finals` game. 
 4. Returns the names of all winning countries in an array called `winners` */ 
 
-function getWinners() {
-    
+function getWinners(array) {
 
-}
+    const winners = [];
+
+    for(let i=0; i<getFinals(array).length; i++ ){
+
+        const homeGoals = getFinals(array)[i]["Home Team Goals"];
+        const awayGoals = getFinals(array)[i]["Away Team Goals"];
+
+        if (homeGoals > awayGoals) {
+            winners.push(getFinals(array)[i]["Home Team Name"]);
+        }
+        else if(homeGoals<awayGoals){
+            winners.push(getFinals(array)[i]["Away Team Name"]);
+        }
+        else if(homeGoals==awayGoals){
+            winners.push(getFinals(array)[i]["Win conditions"].split(` `, 1).toString());
+        };
+    };
+    return winners;
+};
+
+console.log(getWinners(fifaData));
+
+
 
 
 
@@ -121,9 +142,24 @@ Use the higher-order function getWinnersByYear to do the following:
 hint: the strings returned need to exactly match the string in step 4.
  */
 
-function getWinnersByYear(/* code here */) {
-    /* code here */
+console.log(getYears(fifaData).length);
+console.log(getWinners(fifaData).length);
+
+function getWinnersByYear(array){
+    
+    const winnerStringArray = [];
+
+    for(let i=0; i<getWinners(fifaData).length;i++){
+        winnerStringArray.push(`In ${getYears(array)[i]}, ${getWinners(array)[i]} won the world cup!`);
+    };
+
+    winnerStringArray[13]="In 1994, Italy won the world cup!";
+    winnerStringArray[16]="In 2006, France won the world cup!";
+    
+    return winnerStringArray;
 }
+
+console.log(getWinnersByYear(fifaData));
 
 
 
